@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="spacing">18dp</dimen>
+    <dimen name="spacingitem">63dp</dimen>
+    <dimen name="spacingnotification">20dp</dimen>
+</resources>

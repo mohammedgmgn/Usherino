@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/popular"
+        android:visible="true"
+        android:title="Most Popular"
+        android:showAsAction="never"
+        android:orderInCategory="100"  />
+    <item android:id="@+id/fav"
+        android:visible="true"
+        android:title="favorites"
+        android:showAsAction="never"
+        />
+    <item android:id="@+id/high"
+        android:visible="true"
+        android:title="Highest Rated"
+        android:showAsAction="never"
+        />
+
+
+
+</menu>
