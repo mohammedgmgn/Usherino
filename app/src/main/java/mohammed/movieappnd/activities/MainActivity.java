@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle(R.string.Most_Popular);
         mainFragment=new MainFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.container,mainFragment).commit();
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container,mainFragment).commit();
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {
