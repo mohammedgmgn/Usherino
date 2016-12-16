@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle(R.string.Most_Popular);
         mainFragment=new MainFragment();
-        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container,mainFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,mainFragment).commit();
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
 
 
 

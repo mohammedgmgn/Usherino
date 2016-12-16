@@ -51,6 +51,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/favor"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_like_outline"
+        android:layout_margin="16dp"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|right"/>
 
 
     <android.support.v4.widget.NestedScrollView
@@ -111,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tagline"
                     android:layout_toRightOf="@id/posterimage"
-                    android:paddingBottom="8dp"
+                    android:paddingBottom="15dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp" />
 
@@ -125,6 +133,18 @@
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:id="@+id/review"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/button_border"
+                    android:layout_toRightOf="@+id/duration"
+                    android:layout_toEndOf="@+id/duration" />
             </android.support.percent.PercentRelativeLayout>
 
             <View
@@ -343,6 +363,12 @@
 
 
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewtrailer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </android.support.v7.widget.RecyclerView>
 
 
         </LinearLayout>

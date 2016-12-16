@@ -1,15 +1,18 @@
 <resources>
-    <string name="app_name">MovieApp</string>
+    <string name="app_name">Usherino</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="Most_Popular">Most Popular</string>
     <string name="Highest_Rated">Highest Rated</string>
-    <string name="Favourit">Favourit</string>
+    <string name="Favourit">Favourits</string>
 
     <string name="release_date">"Release Date - "</string>
     <string name="error_msg">Check internet connection.</string>
     <string name="popular_URL">https://api.themoviedb.org/3/discover/movie?api_key=69f8d44407d7b73a4103add4c76fccb6</string>
     <string name="Highest_URL">http://api.themoviedb.org/3/movie/top_rated?api_key=69f8d44407d7b73a4103add4c76fccb6</string>
+    <string name="movie_extra_subject">Hey! Movie suggestion for you :)</string>
+    <string name="site">"Site - "</string>
+    <string name="quality">"Quality - "</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

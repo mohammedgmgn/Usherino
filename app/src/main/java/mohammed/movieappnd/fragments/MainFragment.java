@@ -1,6 +1,8 @@
 package mohammed.movieappnd.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,19 +32,25 @@ import butterknife.ButterKnife;
 import mohammed.movieappnd.R;
 import mohammed.movieappnd.activities.DetailActivity;
 import mohammed.movieappnd.adapters.MovieAdapter;
+import mohammed.movieappnd.data.ContentProviderHelperMethods;
 import mohammed.movieappnd.model.Movie;
 import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment{
+
     private List<Movie> movies;
-    private MovieAdapter adapter;
-      @BindView(R.id.myrec)RecyclerView moviesRecyclerView;
+    public MovieAdapter adapter;
+    @BindView(R.id.myrec)RecyclerView moviesRecyclerView;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,9 +58,10 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View  root= inflater.inflate(R.layout.fragment_main, container, false);
-          ButterKnife.bind(this, root);
+        ButterKnife.bind(this, root);
         moviesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
-        sendJsonRequest(getResources().getString(R.string.popular_URL));
+
+            sendJsonRequest(getResources().getString(R.string.popular_URL));
 
         return root;
     }
@@ -104,23 +113,59 @@ public class MainFragment extends Fragment {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.popular) {
-movies.clear();
+            if(movies!=null)
+            {
+                movies.clear();
+
+            }
             sendJsonRequest(getResources().getString(R.string.popular_URL));
-            adapter.notifyDataSetChanged();
+            if(adapter!=null)
+            {
+                adapter.notifyDataSetChanged();
+
+            }
             // moviesRecyclerView.setAdapter(adapter);
             getActivity().setTitle(R.string.Most_Popular);
             return true;
         }
         else if (id == R.id.fav) {
+
+            ArrayList<Movie> list = new ArrayList<>
+                    (ContentProviderHelperMethods
+                            .getMovieListFromDatabase(getActivity()));
+
+            if(movies!=null)
+            {
+                movies.clear();
+
+            }
+            for (Movie movie : list) {
+                movies.add(movie);
+            }
+            if(adapter!=null)
+            {
+                adapter.notifyDataSetChanged();
+
+            }
+            getActivity().setTitle(R.string.Favourit);
+
             return true;
 
 
         }
         else if (id == R.id.high) {
-            movies.clear();
-            sendJsonRequest(getResources().getString(R.string.Highest_URL));
+            if(movies!=null)
+            {
+                movies.clear();
 
-            adapter.notifyDataSetChanged();
+            }
+
+            sendJsonRequest(getResources().getString(R.string.Highest_URL));
+if(adapter!=null)
+{
+    adapter.notifyDataSetChanged();
+
+}
             //   moviesRecyclerView.setAdapter(adapter);
 
             getActivity().setTitle(R.string.Highest_Rated);
@@ -131,6 +176,13 @@ movies.clear();
         }
         return onOptionsItemSelected(item);
 
+    }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 
 

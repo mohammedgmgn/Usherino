@@ -64,7 +64,6 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(movieholder.moviepic);
-
     }
 
 
