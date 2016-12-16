@@ -31,10 +31,10 @@ public class myreviews extends AppCompatActivity {
         mytxt = (TextView) findViewById(R.id.mytxt);
         setTitle("Reviews");
 
-        String id= getIntent().getExtras().getString("ID");
+        String id = getIntent().getExtras().getString("ID");
 
-        Uri build= Uri.parse("https://api.themoviedb.org/3/movie").buildUpon()
-                .appendPath(id).appendPath("reviews").appendQueryParameter("api_key","69f8d44407d7b73a4103add4c76fccb6").build();
+        Uri build = Uri.parse("https://api.themoviedb.org/3/movie").buildUpon()
+                .appendPath(id).appendPath("reviews").appendQueryParameter("api_key", "69f8d44407d7b73a4103add4c76fccb6").build();
 
         sendJsonRequest(build.toString());
 
@@ -50,14 +50,14 @@ public class myreviews extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject object = array.getJSONObject(i);
 
-                        revi.add("written by: " + object.getString("author")+ "\n" +object.getString("content"));
+                        revi.add("written by: " + object.getString("author") + "\n" + object.getString("content"));
                     }
-                    StringBuilder mybuilder=new StringBuilder();
-                    for(int i=0;i<revi.size();i++){
+                    StringBuilder mybuilder = new StringBuilder();
+                    for (int i = 0; i < revi.size(); i++) {
 
                         mybuilder.append(revi.get(i) + "\n\n--------------------------------------\n\n");
                     }
-                    String res=mybuilder.toString();
+                    String res = mybuilder.toString();
                     mytxt.setText(res);
 
                 } catch (JSONException e) {

@@ -14,7 +14,7 @@ import mohammed.movieappnd.model.MovieDetails;
  */
 
 public class ContentProviderHelperMethods {
-        public static ArrayList<Movie> getMovieListFromDatabase(Activity mAct) {
+    public static ArrayList<Movie> getMovieListFromDatabase(Activity mAct) {
         ArrayList<Movie> mMovieList = new ArrayList<>();
         Uri contentUri = MovieContract.MovieEntry.CONTENT_URI;
         Cursor c = mAct.getContentResolver().query(contentUri, null, null, null, null);

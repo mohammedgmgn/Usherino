@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     MainFragment mainFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,19 +23,17 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setTitle(R.string.Most_Popular);
-        mainFragment=new MainFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,mainFragment).commit();
+        mainFragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
-
-
 
 
 }

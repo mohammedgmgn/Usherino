@@ -54,64 +54,83 @@ import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 public class DetailFragment extends Fragment {
     private Unbinder unbinder;
-    private  String MovieID;
+    private String MovieID;
     private MovieDetails mymovie;
     private ArrayList<String> trailerInfo = new ArrayList<>();
-    @BindView(R.id.toolbartest)Toolbar toolbar;
-    @BindView(R.id.favor)FloatingActionButton FavoriteBtn;
+    @BindView(R.id.toolbartest)
+    Toolbar toolbar;
+    @BindView(R.id.favor)
+    FloatingActionButton FavoriteBtn;
 
-    @BindView(R.id.collapsingToolbartest)CollapsingToolbarLayout collapsingToolbar;
-    @BindView(R.id.cover)ImageView backdrop;
-    @BindView(R.id.posterimage)ImageView poster;
-    @BindView(R.id.ratings_background)ImageView ratingsBackground;
-    @BindView(R.id.genre_background)ImageView genreBackground;
-    @BindView(R.id.pop_background)ImageView popBackground;
-    @BindView(R.id.lang_background)ImageView langBackground;
-    @BindView(R.id.title1)TextView title;
-    @BindView(R.id.tagline)TextView tagline;
-    @BindView(R.id.review)Button review;
+    @BindView(R.id.collapsingToolbartest)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.cover)
+    ImageView backdrop;
+    @BindView(R.id.posterimage)
+    ImageView poster;
+    @BindView(R.id.ratings_background)
+    ImageView ratingsBackground;
+    @BindView(R.id.genre_background)
+    ImageView genreBackground;
+    @BindView(R.id.pop_background)
+    ImageView popBackground;
+    @BindView(R.id.lang_background)
+    ImageView langBackground;
+    @BindView(R.id.title1)
+    TextView title;
+    @BindView(R.id.tagline)
+    TextView tagline;
+    @BindView(R.id.review)
+    Button review;
 
-    @BindView(R.id.description)TextView overview;
-    @BindView(R.id.date_status)TextView dateStatusView;
-    @BindView(R.id.rate)TextView ratingView;
-    @BindView(R.id.language)TextView languageView;
-    @BindView(R.id.popularity)TextView popularityView;
-    @BindView(R.id.vote_count)TextView voteCountView;
-    @BindView(R.id.recyclerViewtrailer)RecyclerView recyclerView;
+    @BindView(R.id.description)
+    TextView overview;
+    @BindView(R.id.date_status)
+    TextView dateStatusView;
+    @BindView(R.id.rate)
+    TextView ratingView;
+    @BindView(R.id.language)
+    TextView languageView;
+    @BindView(R.id.popularity)
+    TextView popularityView;
+    @BindView(R.id.vote_count)
+    TextView voteCountView;
+    @BindView(R.id.recyclerViewtrailer)
+    RecyclerView recyclerView;
 
-    boolean check=false;
+    boolean check = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root= inflater.inflate(R.layout.fragment_detail, container, false);
+        View root = inflater.inflate(R.layout.fragment_detail, container, false);
         if (container != null) {
             container.removeAllViews();
         }
         unbinder = ButterKnife.bind(this, root);
         getMovieID();
-       // Toast.makeText(getContext(),MovieID,Toast.LENGTH_SHORT).show();
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        // Toast.makeText(getContext(),MovieID,Toast.LENGTH_SHORT).show();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         mymovie = new MovieDetails();
         getMovieDataByID(MovieID);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayout.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         popBackground.setColorFilter(Color.parseColor("#BE2F2F"), PorterDuff.Mode.MULTIPLY);
-        ratingsBackground.setColorFilter(Color.parseColor("#BE2F2F"),PorterDuff.Mode.MULTIPLY);
-        genreBackground.setColorFilter(Color.parseColor("#BE2F2F"),PorterDuff.Mode.MULTIPLY);
-        langBackground.setColorFilter(Color.parseColor("#BE2F2F"),PorterDuff.Mode.MULTIPLY);
-        if(checkfavorit(MovieID)){
+        ratingsBackground.setColorFilter(Color.parseColor("#BE2F2F"), PorterDuff.Mode.MULTIPLY);
+        genreBackground.setColorFilter(Color.parseColor("#BE2F2F"), PorterDuff.Mode.MULTIPLY);
+        langBackground.setColorFilter(Color.parseColor("#BE2F2F"), PorterDuff.Mode.MULTIPLY);
+        if (checkfavorit(MovieID)) {
             FavoriteBtn.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-            check= true;
-        }
-        else
-        {
+            check = true;
+        } else {
             FavoriteBtn.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
 
         }
@@ -119,27 +138,31 @@ public class DetailFragment extends Fragment {
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getActivity(),myreviews.class);
-                i.putExtra("ID",MovieID);
+                Intent i = new Intent(getActivity(), myreviews.class);
+                i.putExtra("ID", MovieID);
                 startActivity(i);
 
             }
         });
-                return root;
+        return root;
     }
-    @Override public void onDestroyView() {
+
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-    public void getMovieID(){
-        if(getArguments().getString("mID")!=null) {
+
+    public void getMovieID() {
+        if (getArguments().getString("mID") != null) {
             MovieID = getArguments().getString("mID");
         }
 
     }
-    public void UpdateData(MovieDetails movie){
 
-        if(movie!=null) {
+    public void UpdateData(MovieDetails movie) {
+
+        if (movie != null) {
 
             Glide.with(getContext()).load(movie.getBackdrop()).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .thumbnail(0.5f)
@@ -155,9 +178,9 @@ public class DetailFragment extends Fragment {
             tagline.setText(movie.getTagLine());
             overview.setText(movie.getOverview());
             languageView.setText(movie.getLanguage());
-            voteCountView.setText(movie.getVoteCount()+" votes");
-            popularityView.setText(movie.getPopularity().substring(0,4));
-            dateStatusView.setText(movie.getDate()+" (Released)");
+            voteCountView.setText(movie.getVoteCount() + " votes");
+            popularityView.setText(movie.getPopularity().substring(0, 4));
+            dateStatusView.setText(movie.getDate() + " (Released)");
             ratingView.setText((movie.getRating()));
             collapsingToolbar.setTitle(movie.getTitle());
             getTrailerInfo(MovieID);
@@ -173,7 +196,7 @@ public class DetailFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
 
-                    Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG);
                     mymovie.setId(Integer.valueOf(id));
                     mymovie.setTitle(response.getString("title"));
                     mymovie.setRating(String.valueOf(response.getDouble("vote_average")));
@@ -202,9 +225,9 @@ public class DetailFragment extends Fragment {
                     FavoriteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(check ==false) {
+                            if (check == false) {
                                 FavoriteBtn.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like));
-                                check =true;
+                                check = true;
 
                                 ContentValues values = new ContentValues();
                                 values.put(MovieContract.MovieEntry.KEY_ID, mymovie.getId());
@@ -223,17 +246,16 @@ public class DetailFragment extends Fragment {
                                 values.put(MovieContract.MovieEntry.KEY_POSTER, mymovie.getPoster());
                                 getActivity().getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, values);
 
-                                Toast.makeText(getContext(),"movie added to favorites",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "movie added to favorites", Toast.LENGTH_SHORT).show();
 
-                            }
-                            else {
+                            } else {
                                 FavoriteBtn.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_like_outline));
-                                check =false;
+                                check = false;
                                 Uri contentUri = MovieContract.MovieEntry.CONTENT_URI;
 
-                                contentUri=contentUri.buildUpon().appendPath(String.valueOf(MovieID)).build();
+                                contentUri = contentUri.buildUpon().appendPath(String.valueOf(MovieID)).build();
                                 getActivity().getContentResolver().delete(contentUri, "id=?", new String[]{String.valueOf(MovieID)});
-                                Toast.makeText(getContext(),"movie deleted from favorites",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "movie deleted from favorites", Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -249,22 +271,23 @@ public class DetailFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
             }
         });
         ApplicationController.getInstance().addToRequestQueue(getDetails);
     }
-    public boolean checkfavorit(String id){
+
+    public boolean checkfavorit(String id) {
         boolean isMovieInDB = ContentProviderHelperMethods
                 .isMovieInDatabase(getActivity(),
                         String.valueOf(id));
-if(isMovieInDB)
-{
-    return true;
+        if (isMovieInDB) {
+            return true;
 
-}else
-    return false;
+        } else
+            return false;
     }
+
     public Intent shareIntent(String data) {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
@@ -275,7 +298,7 @@ if(isMovieInDB)
 
     private void getTrailerInfo(final String id) {
         trailerInfo.clear();
-        String requestUrl = "http://api.themoviedb.org/3/movie/" + id + "/videos?" + "api_key=c6834e30cc99f62236db8a140ddd023e";
+        String requestUrl = "http://api.themoviedb.org/3/movie/" + id + "/videos?" + "api_key=?";
 
         JsonObjectRequest mTrailerRequest = new JsonObjectRequest(requestUrl, new Response.Listener<JSONObject>() {
             @Override
@@ -303,7 +326,7 @@ if(isMovieInDB)
             public void onErrorResponse(VolleyError error) {
             }
         });
-ApplicationController.getInstance().addToRequestQueue(mTrailerRequest);
+        ApplicationController.getInstance().addToRequestQueue(mTrailerRequest);
     }
 
     @Override
@@ -311,6 +334,7 @@ ApplicationController.getInstance().addToRequestQueue(mTrailerRequest);
         // TODO Add your menu entries here
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -321,7 +345,7 @@ ApplicationController.getInstance().addToRequestQueue(mTrailerRequest);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_share) {
             //   Toast.makeText(getContext(),"test sharing",Toast.LENGTH_LONG).show();
-           String[] data = trailerInfo.get(0).split(",,");
+            String[] data = trailerInfo.get(0).split(",,");
             startActivity(Intent.createChooser(shareIntent("http://www.youtube.com/watch?v=" + data[0]), "Share Via"));
 
             return true;
@@ -329,7 +353,6 @@ ApplicationController.getInstance().addToRequestQueue(mTrailerRequest);
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

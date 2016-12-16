@@ -34,7 +34,7 @@ import static mohammed.movieappnd.data.MovieContract.MovieEntry.TABLE_MOVIE_DETA
 public class MovieDbHelper extends SQLiteOpenHelper {
     // The name of the database
     private static final String DATABASE_NAME = "moviesDb.db";
-   // public static final String TABLE_NAME = "movies";
+    // public static final String TABLE_NAME = "movies";
 
     // If you change the database schema, you must increment the database version
     private static final int VERSION = 2;
@@ -44,6 +44,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
+
     /**
      * Called when the movies database is created for the first time.
      */
@@ -67,6 +68,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                 + KEY_POSTER + " TEXT" + ")";
         db.execSQL(CREATE_MOVIES_TABLE);
     }
+
     /**
      * This method discards the old table of data and calls onCreate to recreate a new one.
      * This only occurs when the version number for this database (DATABASE_VERSION) is incremented.
@@ -78,15 +80,12 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-    public void addMovie(MovieDetails movie)
-    {
-        SQLiteDatabase db=this.getReadableDatabase();
-        ContentValues values=new ContentValues();
-        values.put(KEY_ID,movie.getId());
+    public void addMovie(MovieDetails movie) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, movie.getId());
         values.put(MovieContract.MovieEntry.KEY_TITLE, movie.getTitle());
-        values.put(MovieContract.MovieEntry.KEY_RATING,movie.getRating());
+        values.put(MovieContract.MovieEntry.KEY_RATING, movie.getRating());
         values.put(MovieContract.MovieEntry.KEY_GENRE, movie.getGenre());
         values.put(MovieContract.MovieEntry.KEY_DATE, movie.getDate());
         values.put(MovieContract.MovieEntry.KEY_STATUS, movie.getStatus());
@@ -98,11 +97,11 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         values.put(KEY_LANGUAGE, movie.getLanguage());
         values.put(MovieContract.MovieEntry.KEY_POPULARITY, movie.getPopularity());
         values.put(MovieContract.MovieEntry.KEY_POSTER, movie.getPoster());
-        db.insert(TABLE_MOVIE_DETAILS,null,values);
+        db.insert(TABLE_MOVIE_DETAILS, null, values);
         db.close();
     }
 
-      public MovieDetails getMovie(int id) {
+    public MovieDetails getMovie(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_MOVIE_DETAILS, new String[]{KEY_ID,
@@ -153,28 +152,24 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         return movieList;
     }
 
-    public void deleteMovie(String ID){
-        SQLiteDatabase db= this.getWritableDatabase();
-        db.delete(TABLE_MOVIE_DETAILS, MovieContract.MovieEntry._ID+" =?",new String[]{ID});
+    public void deleteMovie(String ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MOVIE_DETAILS, MovieContract.MovieEntry._ID + " =?", new String[]{ID});
         db.close();
     }
-    public boolean ifexist(String ID2)
-    {
-        SQLiteDatabase db= this.getWritableDatabase();
 
-        String Query = "Select * from " + TABLE_MOVIE_DETAILS + " where " +  MovieContract.MovieEntry._ID + " = " + ID2;
+    public boolean ifexist(String ID2) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String Query = "Select * from " + TABLE_MOVIE_DETAILS + " where " + MovieContract.MovieEntry._ID + " = " + ID2;
         Cursor cursor = db.rawQuery(Query, null);
-        if(cursor.getCount() <= 0){
+        if (cursor.getCount() <= 0) {
             cursor.close();
             return false;
         }
         cursor.close();
         return true;
     }
-
-
-
-
 
 
 }

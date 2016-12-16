@@ -18,7 +18,7 @@ import static mohammed.movieappnd.data.MovieContract.MovieEntry.TABLE_MOVIE_DETA
  * Created by gmgn on 12/15/2016.
  */
 
-public class MovieContentProvider  extends ContentProvider{
+public class MovieContentProvider extends ContentProvider {
 
     // COMPLETED (1) Define final integer constants for the directory of tasks and a single item.
     // It's convention to use 100, 200, 300, etc for directories,
@@ -30,28 +30,30 @@ public class MovieContentProvider  extends ContentProvider{
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
 
-    public static UriMatcher buildUriMatcher(){
+    public static UriMatcher buildUriMatcher() {
 
-        UriMatcher uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
+        UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         //add matches with add URI
-        uriMatcher.addURI(MovieContract.AUTHORITY,MovieContract.PATH_MOVIES,MOVIES);
-     //for single item
+        uriMatcher.addURI(MovieContract.AUTHORITY, MovieContract.PATH_MOVIES, MOVIES);
+        //for single item
         uriMatcher.addURI(MovieContract.AUTHORITY, MovieContract.PATH_MOVIES + "/#", MOVIE_WITH_ID);
 
         return uriMatcher;
 
     }
-    private  MovieDbHelper mMovieDbHelper;
+
+    private MovieDbHelper mMovieDbHelper;
 
 
     @Override
     public boolean onCreate() {
-        Context context=getContext();
-        mMovieDbHelper=new MovieDbHelper(context);
+        Context context = getContext();
+        mMovieDbHelper = new MovieDbHelper(context);
 
 
         return true;
     }
+
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -60,20 +62,19 @@ public class MovieContentProvider  extends ContentProvider{
         // COMPLETED (3) Query for the tasks directory and write a default case
         // COMPLETED (4) Set a notification URI on the Cursor and return that Cursor
         // Return the desired Cursor
-     final  SQLiteDatabase db=mMovieDbHelper.getReadableDatabase();
-        int match=sUriMatcher.match(uri);
+        final SQLiteDatabase db = mMovieDbHelper.getReadableDatabase();
+        int match = sUriMatcher.match(uri);
         Cursor returnCursor;
 
-        switch (match)
-        {
+        switch (match) {
             case MOVIES:
-                returnCursor=db.query(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS,projection,selection,selectionArgs,null,null,sortOrder);
+                returnCursor = db.query(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case MOVIE_WITH_ID:
-                String id=uri.getPathSegments().get(1);
-                String mSelection="_id=?";
-                String [] mSelectionArgs=new String[]{id};
-                returnCursor=db.query(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS,projection,mSelection,mSelectionArgs,null,null,sortOrder);
+                String id = uri.getPathSegments().get(1);
+                String mSelection = "_id=?";
+                String[] mSelectionArgs = new String[]{id};
+                returnCursor = db.query(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS, projection, mSelection, mSelectionArgs, null, null, sortOrder);
                 break;
 
 
@@ -83,7 +84,7 @@ public class MovieContentProvider  extends ContentProvider{
         }
 
         returnCursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return  returnCursor;
+        return returnCursor;
     }
 
     @Nullable
@@ -94,34 +95,29 @@ public class MovieContentProvider  extends ContentProvider{
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues)
-    {
+    public Uri insert(Uri uri, ContentValues contentValues) {
         // TODO (1) Get access to the task database (to write new data to)
-        final SQLiteDatabase db=mMovieDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = mMovieDbHelper.getWritableDatabase();
         // TODO (2) Write URI matching code to identify the match for the movies directory
-        int match=sUriMatcher.match(uri);
+        int match = sUriMatcher.match(uri);
         // TODO (3) Insert new values into the database
         // TODO (4) Set the value for the returnedUri and write the default case for unknown URI's
-       Uri returnUri;
-        switch (match)
-        {
-         case MOVIES:
-             long id;
-             //insert will return id =-1 if inserton failed
-             id = db.insert(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS, null, contentValues);
-             if(id>0)
-             {
-                 returnUri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, id);
+        Uri returnUri;
+        switch (match) {
+            case MOVIES:
+                long id;
+                //insert will return id =-1 if inserton failed
+                id = db.insert(MovieContract.MovieEntry.TABLE_MOVIE_DETAILS, null, contentValues);
+                if (id > 0) {
+                    returnUri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, id);
 
-             }
-             else
-             {
-                 throw  new android.database.sqlite.SQLiteAbortException("Failed to insert row ino" + uri);
-             }
+                } else {
+                    throw new android.database.sqlite.SQLiteAbortException("Failed to insert row ino" + uri);
+                }
 
-             break;
-         default:
-             throw new UnsupportedOperationException("Unknown uri: " + uri);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
 
         }
         // COMPLETED (4) Set the value for the returnedUri and write the default case for unknown URI's
@@ -149,7 +145,7 @@ public class MovieContentProvider  extends ContentProvider{
                 String id = uri.getPathSegments().get(1);
                 // Use selections/selectionArgs to filter for this ID
                 moviesDeleted = db.delete(TABLE_MOVIE_DETAILS, selection, selectionArgs);
-                Log.v("id",id.toString());
+                Log.v("id", id.toString());
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

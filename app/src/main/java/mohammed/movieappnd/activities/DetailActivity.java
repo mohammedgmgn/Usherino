@@ -13,14 +13,15 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        String mid=getIntent().getStringExtra("mID");
-        Bundle bundle=new Bundle();
-        bundle.putString("mID",mid);
-        DetailFragment fragment=new DetailFragment();
+        String mid = getIntent().getStringExtra("mID");
+        Bundle bundle = new Bundle();
+        bundle.putString("mID", mid);
+        DetailFragment fragment = new DetailFragment();
         fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.container2, fragment).commit();
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

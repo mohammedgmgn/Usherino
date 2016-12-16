@@ -37,11 +37,12 @@ import mohammed.movieappnd.model.Movie;
 import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment {
 
     private List<Movie> movies;
     public MovieAdapter adapter;
-    @BindView(R.id.myrec)RecyclerView moviesRecyclerView;
+    @BindView(R.id.myrec)
+    RecyclerView moviesRecyclerView;
 
 
     @Override
@@ -51,26 +52,25 @@ public class MainFragment extends Fragment{
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View  root= inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, root);
         moviesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
 
-            sendJsonRequest(getResources().getString(R.string.popular_URL));
+        sendJsonRequest(getResources().getString(R.string.popular_URL));
 
         return root;
     }
 
-    public  void sendJsonRequest(String url) {
+    public void sendJsonRequest(String url) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                movies=new ArrayList<>();
+                movies = new ArrayList<>();
                 try {
                     JSONArray mResultArray = response.getJSONArray("results");
                     for (int i = 0; i < mResultArray.length(); i++) {
@@ -85,11 +85,11 @@ public class MainFragment extends Fragment{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter=new MovieAdapter(movies, getContext(), new MovieAdapter.RecyclerViewClickListener() {
+                adapter = new MovieAdapter(movies, getContext(), new MovieAdapter.RecyclerViewClickListener() {
                     @Override
                     public void recyclerViewListClicked(View v, int position) {
-                        Intent intent =new Intent(getContext(), DetailActivity.class);
-                        intent.putExtra("mID",movies.get(position).getId());
+                        Intent intent = new Intent(getContext(), DetailActivity.class);
+                        intent.putExtra("mID", movies.get(position).getId());
                         startActivity(intent);
                     }
                 });
@@ -99,7 +99,7 @@ public class MainFragment extends Fragment{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(),"connection Error",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "connection Error", Toast.LENGTH_SHORT).show();
             }
         });
         ApplicationController.getInstance().addToRequestQueue(request);
@@ -113,37 +113,32 @@ public class MainFragment extends Fragment{
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.popular) {
-            if(movies!=null)
-            {
+            if (movies != null) {
                 movies.clear();
 
             }
             sendJsonRequest(getResources().getString(R.string.popular_URL));
-            if(adapter!=null)
-            {
+            if (adapter != null) {
                 adapter.notifyDataSetChanged();
 
             }
             // moviesRecyclerView.setAdapter(adapter);
             getActivity().setTitle(R.string.Most_Popular);
             return true;
-        }
-        else if (id == R.id.fav) {
+        } else if (id == R.id.fav) {
 
             ArrayList<Movie> list = new ArrayList<>
                     (ContentProviderHelperMethods
                             .getMovieListFromDatabase(getActivity()));
 
-            if(movies!=null)
-            {
+            if (movies != null) {
                 movies.clear();
 
             }
             for (Movie movie : list) {
                 movies.add(movie);
             }
-            if(adapter!=null)
-            {
+            if (adapter != null) {
                 adapter.notifyDataSetChanged();
 
             }
@@ -152,20 +147,17 @@ public class MainFragment extends Fragment{
             return true;
 
 
-        }
-        else if (id == R.id.high) {
-            if(movies!=null)
-            {
+        } else if (id == R.id.high) {
+            if (movies != null) {
                 movies.clear();
 
             }
 
             sendJsonRequest(getResources().getString(R.string.Highest_URL));
-if(adapter!=null)
-{
-    adapter.notifyDataSetChanged();
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
 
-}
+            }
             //   moviesRecyclerView.setAdapter(adapter);
 
             getActivity().setTitle(R.string.Highest_Rated);
@@ -180,7 +172,7 @@ if(adapter!=null)
 
 
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null;
     }
