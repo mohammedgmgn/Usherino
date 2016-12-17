@@ -1,8 +1,6 @@
 package mohammed.movieappnd.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -43,15 +41,11 @@ public class MainFragment extends Fragment {
     public MovieAdapter adapter;
     @BindView(R.id.myrec)
     RecyclerView moviesRecyclerView;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +59,6 @@ public class MainFragment extends Fragment {
 
         return root;
     }
-
     public void sendJsonRequest(String url) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
             @Override
@@ -169,13 +162,4 @@ public class MainFragment extends Fragment {
         return onOptionsItemSelected(item);
 
     }
-
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-
 }

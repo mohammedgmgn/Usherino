@@ -1,5 +1,6 @@
 package mohammed.movieappnd.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         mainFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

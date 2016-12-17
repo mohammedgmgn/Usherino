@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import mohammed.movieappnd.BuildConfig;
 import mohammed.movieappnd.R;
 import mohammed.movieappnd.adapters.trailer_adapter;
 import mohammed.movieappnd.data.ContentProviderHelperMethods;
@@ -298,7 +299,9 @@ public class DetailFragment extends Fragment {
 
     private void getTrailerInfo(final String id) {
         trailerInfo.clear();
-        String requestUrl = "http://api.themoviedb.org/3/movie/" + id + "/videos?" + "api_key=?";
+        String API_KEY = BuildConfig.THE_MOVIE_API_KEY;
+
+        String requestUrl = "http://api.themoviedb.org/3/movie/" + id + "/videos?" + "api_key="+API_KEY;
 
         JsonObjectRequest mTrailerRequest = new JsonObjectRequest(requestUrl, new Response.Listener<JSONObject>() {
             @Override
