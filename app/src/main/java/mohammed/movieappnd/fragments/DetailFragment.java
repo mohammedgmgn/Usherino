@@ -300,7 +300,6 @@ public class DetailFragment extends Fragment {
     private void getTrailerInfo(final String id) {
         trailerInfo.clear();
         String API_KEY = BuildConfig.THE_MOVIE_API_KEY;
-
         String requestUrl = "http://api.themoviedb.org/3/movie/" + id + "/videos?" + "api_key="+API_KEY;
 
         JsonObjectRequest mTrailerRequest = new JsonObjectRequest(requestUrl, new Response.Listener<JSONObject>() {

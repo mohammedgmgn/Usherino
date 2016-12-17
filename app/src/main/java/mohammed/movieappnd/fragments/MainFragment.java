@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import mohammed.movieappnd.BuildConfig;
 import mohammed.movieappnd.R;
 import mohammed.movieappnd.activities.DetailActivity;
 import mohammed.movieappnd.adapters.MovieAdapter;
@@ -41,6 +42,7 @@ public class MainFragment extends Fragment {
     public MovieAdapter adapter;
     @BindView(R.id.myrec)
     RecyclerView moviesRecyclerView;
+    String API_KEY = BuildConfig.THE_MOVIE_API_KEY;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,7 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, root);
         moviesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
 
-        sendJsonRequest(getResources().getString(R.string.popular_URL));
+        sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);
 
         return root;
     }
@@ -110,7 +112,8 @@ public class MainFragment extends Fragment {
                 movies.clear();
 
             }
-            sendJsonRequest(getResources().getString(R.string.popular_URL));
+
+            sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
 
@@ -146,7 +149,7 @@ public class MainFragment extends Fragment {
 
             }
 
-            sendJsonRequest(getResources().getString(R.string.Highest_URL));
+            sendJsonRequest(getResources().getString(R.string.Highest_URL)+API_KEY);
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
 

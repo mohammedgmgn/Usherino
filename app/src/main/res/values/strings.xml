@@ -8,8 +8,8 @@
 
     <string name="release_date">"Release Date - "</string>
     <string name="error_msg">Check internet connection.</string>
-    <string name="popular_URL">https://api.themoviedb.org/3/discover/movie?api_key=69f8d44407d7b73a4103add4c76fccb6</string>
-    <string name="Highest_URL">http://api.themoviedb.org/3/movie/top_rated?api_key=69f8d44407d7b73a4103add4c76fccb6</string>
+    <string name="popular_URL">https://api.themoviedb.org/3/discover/movie?api_key=</string>
+    <string name="Highest_URL">http://api.themoviedb.org/3/movie/top_rated?api_key=</string>
     <string name="movie_extra_subject">Hey! Movie suggestion for you :)</string>
     <string name="site">"Site - "</string>
     <string name="quality">"Quality - "</string>
