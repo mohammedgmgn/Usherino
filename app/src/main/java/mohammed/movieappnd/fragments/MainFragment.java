@@ -38,7 +38,7 @@ import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 public class MainFragment extends Fragment {
 
-    private List<Movie> movies;
+    private List<Movie> movies=new ArrayList<>();
     public MovieAdapter adapter;
     @BindView(R.id.myrec)
     RecyclerView moviesRecyclerView;
@@ -48,6 +48,8 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    //            it.buildConfigField 'String', 'OPEN_WEATHER_MAP_API_KEY', "\"c882c94be45fff9d16a1cf845fc16ec5\""
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class MainFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, root);
         moviesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
-
+        moviesRecyclerView.setHasFixedSize(true);
         sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);
 
         return root;
@@ -110,7 +112,6 @@ public class MainFragment extends Fragment {
         if (id == R.id.popular) {
             if (movies != null) {
                 movies.clear();
-
             }
 
             sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);
