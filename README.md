@@ -12,7 +12,7 @@
 1. Cache images for not loading them again.
 2. Access the database through a `content provider`.
 3. Provide Content Descriptions for `TalkBack` feature.
-4. Mark movie as a favourite from the main activity and the details one.
+4. Mark movie as a favourite from the detail activity.
 5. Use `RecyclerView` instead of `GridView`.
 6. Use `Material Design`.
 7. Follow most of `Google Design Guidelines`.
