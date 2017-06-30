@@ -1,7 +1,7 @@
 # Usherino (Movie App)
  Ushrino is android application to help users discover popular and highly rated movies on the web.
 
- # youtube Video
+ # Youtube Video
 https://www.youtube.com/watch?v=CMv2uIe0kao
 
  ## Features:
