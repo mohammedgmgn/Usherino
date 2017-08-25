@@ -33,11 +33,13 @@ import mohammed.movieappnd.activities.DetailActivity;
 import mohammed.movieappnd.adapters.MovieAdapter;
 import mohammed.movieappnd.data.ContentProviderHelperMethods;
 import mohammed.movieappnd.model.Movie;
+import mohammed.movieappnd.utilities.Util;
 import mohammed.movieappnd.volleysingletone.ApplicationController;
+
+import static mohammed.movieappnd.utilities.Constants.MOVIE_OBJECT_KEY;
 
 
 public class MainFragment extends Fragment {
-
     private List<Movie> movies;
     public MovieAdapter adapter;
     @BindView(R.id.myrec)
@@ -48,6 +50,16 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    public static MainFragment newInstance() {
+        return new MainFragment();
+    }
+    public MainFragment()
+    {
+
+    }
+
+    //            it.buildConfigField 'String', 'OPEN_WEATHER_MAP_API_KEY', "\"c882c94be45fff9d16a1cf845fc16ec5\""
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,35 +68,28 @@ public class MainFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, root);
         moviesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
-
+        moviesRecyclerView.setHasFixedSize(true);
         sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);
 
         return root;
     }
     public void sendJsonRequest(String url) {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (String) null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, (JSONObject) null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 movies = new ArrayList<>();
                 try {
-                    JSONArray mResultArray = response.getJSONArray("results");
-                    for (int i = 0; i < mResultArray.length(); i++) {
-                        JSONObject mResultObject = mResultArray.getJSONObject(i);
-                        Movie movie = new Movie(mResultObject.getString("title"),
-                                "http://image.tmdb.org/t/p/w342/" + mResultObject.getString("poster_path"),
-                                getResources().getString(R.string.release_date) + mResultObject.getString("release_date"),
-                                mResultObject.getString("overview"),
-                                String.valueOf(mResultObject.getInt("id")));
-                        movies.add(movie);
-                    }
+                    movies= Util.Operations.getMovieValuesFromJson(response.toString(),getActivity());
+                //    Util.Operations.updateSharedPrefrence(response.toString(),getActivity());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
                 adapter = new MovieAdapter(movies, getContext(), new MovieAdapter.RecyclerViewClickListener() {
                     @Override
                     public void recyclerViewListClicked(View v, int position) {
                         Intent intent = new Intent(getContext(), DetailActivity.class);
-                        intent.putExtra("mID", movies.get(position).getId());
+                        intent.putExtra(MOVIE_OBJECT_KEY, movies.get(position).getId());
                         startActivity(intent);
                     }
                 });
@@ -110,7 +115,6 @@ public class MainFragment extends Fragment {
         if (id == R.id.popular) {
             if (movies != null) {
                 movies.clear();
-
             }
 
             sendJsonRequest(getResources().getString(R.string.popular_URL)+API_KEY);

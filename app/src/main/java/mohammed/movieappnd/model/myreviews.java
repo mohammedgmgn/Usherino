@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import mohammed.movieappnd.R;
+import mohammed.movieappnd.utilities.Constants;
 import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 public class myreviews extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class myreviews extends AppCompatActivity {
         mytxt = (TextView) findViewById(R.id.mytxt);
         setTitle("Reviews");
 
-        String id = getIntent().getExtras().getString("ID");
+        String id = getIntent().getExtras().getString(Constants.MOVIE_OBJECT_KEY);
 
         Uri build = Uri.parse("https://api.themoviedb.org/3/movie").buildUpon()
                 .appendPath(id).appendPath("reviews").appendQueryParameter("api_key", "69f8d44407d7b73a4103add4c76fccb6").build();

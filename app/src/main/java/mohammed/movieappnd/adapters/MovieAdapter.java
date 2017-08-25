@@ -23,6 +23,7 @@ import mohammed.movieappnd.model.Movie;
  */
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     List<Movie> moviesList;
     Context context;
     private static RecyclerViewClickListener itemListener;

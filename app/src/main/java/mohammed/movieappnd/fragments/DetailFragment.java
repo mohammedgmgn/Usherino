@@ -50,6 +50,7 @@ import mohammed.movieappnd.data.ContentProviderHelperMethods;
 import mohammed.movieappnd.data.MovieContract;
 import mohammed.movieappnd.model.MovieDetails;
 import mohammed.movieappnd.model.myreviews;
+import mohammed.movieappnd.utilities.Constants;
 import mohammed.movieappnd.volleysingletone.ApplicationController;
 
 
@@ -62,7 +63,6 @@ public class DetailFragment extends Fragment {
     Toolbar toolbar;
     @BindView(R.id.favor)
     FloatingActionButton FavoriteBtn;
-
     @BindView(R.id.collapsingToolbartest)
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.cover)
@@ -83,7 +83,6 @@ public class DetailFragment extends Fragment {
     TextView tagline;
     @BindView(R.id.review)
     Button review;
-
     @BindView(R.id.description)
     TextView overview;
     @BindView(R.id.date_status)
@@ -105,6 +104,9 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+    public static DetailFragment newInstance() {
+        return new DetailFragment();
     }
 
     @Override
@@ -155,8 +157,8 @@ public class DetailFragment extends Fragment {
     }
 
     public void getMovieID() {
-        if (getArguments().getString("mID") != null) {
-            MovieID = getArguments().getString("mID");
+        if (getArguments().getString(Constants.MOVIE_OBJECT_KEY) != null) {
+            MovieID = getArguments().getString(Constants.MOVIE_OBJECT_KEY);
         }
 
     }
@@ -164,7 +166,6 @@ public class DetailFragment extends Fragment {
     public void UpdateData(MovieDetails movie) {
 
         if (movie != null) {
-
             Glide.with(getContext()).load(movie.getBackdrop()).diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .thumbnail(0.5f)
                     .crossFade()
