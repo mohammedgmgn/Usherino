@@ -9,7 +9,7 @@ https://www.youtube.com/watch?v=CMv2uIe0kao
 2. Find most rated movies.
 3. Show trailers and reviews of the movies.
 4. Mark Movies as favourites.
-5. Add favourite movies.
+5. Show favourite movies.
 
 ## Technical Notes:
 1. Cache images for not loading them again.
